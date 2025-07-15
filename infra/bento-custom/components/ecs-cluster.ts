@@ -360,9 +360,9 @@ reboot
     // Create Auto Scaling Group for GPU instances (8 instances)
     const gpuAsg = new aws.autoscaling.Group(`${name}-gpu-asg`, {
         name: `${name}-gpu-asg`,
-        desiredCapacity: 1,
-        maxSize: 1,
-        minSize: 1,
+        desiredCapacity: 8,
+        maxSize: 8,
+        minSize: 8,
 
         vpcZoneIdentifiers: network.privateSubnetIds,
 
