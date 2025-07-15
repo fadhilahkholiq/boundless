@@ -142,8 +142,7 @@ export async function setupBentoAPI(
                 ],
 
                 healthCheck: {
-                    command: ["CMD-SHELL", "curl -f http://localhost:8081/health || exit 1"],
-                    // command: ["CMD-SHELL", "pgrep -f '/app/rest_api' || exit 1"],
+                    command: ["CMD-SHELL", "pgrep -f '/app/rest_api' || exit 1"],
                     interval: 30,
                     timeout: 5,
                     retries: 3,
@@ -177,14 +176,14 @@ export async function setupBentoAPI(
 
         healthCheck: {
             enabled: true,
-            path: "/health",
+            path: "/healthy",
             port: "8081",
             protocol: "HTTP",
             interval: 30,
             timeout: 5,
             healthyThreshold: 2,
             unhealthyThreshold: 2,
-            matcher: "200"
+            matcher: "200-499"
         },
 
         tags: {
