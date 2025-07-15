@@ -70,7 +70,7 @@ export async function setupSnarkAgent(
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
                     { name: "RUST_BACKTRACE", value: "1" },
-                    { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/" },
+                    { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/:$LD_LIBRARY_PATH" },
                     { name: "S3_ACCESS_KEY", value: s3AccessKeyId },
                     { name: "S3_SECRET_KEY", value: s3SecretKey },
                 ],
