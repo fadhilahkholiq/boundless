@@ -56,7 +56,7 @@ export async function setupExecAgents(
             {
                 name: "exec-agent-0",
                 // image: "risczero/risc0-bento-agent:stable",
-                image: "e2tu/agent:latest",
+                image: "angelor0/bento-agent:v2.1.1",
                 repositoryCredentials: {
                     credentialsParameter: dockerTokenArn,
                 },
@@ -99,7 +99,7 @@ export async function setupExecAgents(
             {
                 name: "exec-agent-1",
                 // image: "risczero/risc0-bento-agent:stable",
-                image: "e2tu/agent:latest",
+                image: "angelor0/bento-agent:v2.1.1",
                 repositoryCredentials: {
                     credentialsParameter: dockerTokenArn,
                 },
@@ -141,7 +141,7 @@ export async function setupExecAgents(
             },
             {
                 name: "exec-agent-2",
-                image: "e2tu/agent:latest",
+                image: "angelor0/bento-agent:v2.1.1",
                 // image: "risczero/risc0-bento-agent:stable",
                 repositoryCredentials: {
                     credentialsParameter: dockerTokenArn,
@@ -184,7 +184,7 @@ export async function setupExecAgents(
             },
             {
                 name: "exec-agent-3",
-                image: "e2tu/agent:latest",
+                image: "angelor0/bento-agent:v2.1.1",
                 // image: "risczero/risc0-bento-agent:stable",
                 repositoryCredentials: {
                     credentialsParameter: dockerTokenArn,

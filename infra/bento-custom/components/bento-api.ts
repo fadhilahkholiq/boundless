@@ -85,7 +85,7 @@ export async function setupBentoAPI(
         ]).apply(([dbUrl, redisUrl, bucketId, s3AccessKeyId, s3SecretKey, logGroupName]) =>
             JSON.stringify([{
                 name: "bento-api",
-                image: "e2tu/bento-rest_api:latest",
+                image: "angelor0/bento-rest-api:v2.1.1",
                 essential: true,
 
                 portMappings: [{
