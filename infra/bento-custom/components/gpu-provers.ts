@@ -79,6 +79,7 @@ export async function setupGpuProvers(
                     { name: "S3_BUCKET", value: s3Bucket },
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
+                    { name: "RISC0_INFO", value: "1" },
                     { name: "RUST_BACKTRACE", value: "1" },
                     { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda/lib64:$LD_LIBRARY_PATH" },
                     { name: "S3_ACCESS_KEY", value: s3AccessKeyId },

@@ -5,6 +5,7 @@ import { Secrets } from "./secrets";
 import { Network } from "./network";
 import { Storage } from "./storage";
 
+
 export async function setupExecAgents(
     name: string,
     network: Network,
@@ -72,6 +73,7 @@ export async function setupExecAgents(
                     { name: "S3_BUCKET", value: s3Bucket },
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
+                    { name: "RISC0_INFO", value: "1" },
                     { name: "RUST_BACKTRACE", value: "1" },
                     { name: "RISC0_KECCAK_PO2", value: "17" },
                     { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/:$LD_LIBRARY_PATH" },
@@ -115,6 +117,7 @@ export async function setupExecAgents(
                     { name: "S3_BUCKET", value: s3Bucket },
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
+                    { name: "RISC0_INFO", value: "1" },
                     { name: "RUST_BACKTRACE", value: "1" },
                     { name: "RISC0_KECCAK_PO2", value: "17" },
                     { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/:$LD_LIBRARY_PATH" },
@@ -158,6 +161,7 @@ export async function setupExecAgents(
                     { name: "S3_BUCKET", value: s3Bucket },
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
+                    { name: "RISC0_INFO", value: "1" },
                     { name: "RUST_BACKTRACE", value: "1" },
                     { name: "RISC0_KECCAK_PO2", value: "17" },
                     { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/:$LD_LIBRARY_PATH" },
@@ -201,6 +205,7 @@ export async function setupExecAgents(
                     { name: "S3_BUCKET", value: s3Bucket },
                     { name: "AWS_DEFAULT_REGION", value: region },
                     { name: "RUST_LOG", value: "info" },
+                    { name: "RISC0_INFO", value: "1" },
                     { name: "RUST_BACKTRACE", value: "1" },
                     { name: "RISC0_KECCAK_PO2", value: "17" },
                     { name: "LD_LIBRARY_PATH", value: "/usr/local/cuda-12.2/compat/:$LD_LIBRARY_PATH" },
