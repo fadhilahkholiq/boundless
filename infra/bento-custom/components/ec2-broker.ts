@@ -354,7 +354,7 @@ chown -R ubuntu:ubuntu /opt/boundless
 
 # Build the broker binary
 cd /opt/boundless/repo
-RISC0_SKIP_BUILD=1 cargo build --release --bin broker
+RISC0_SKIP_BUILD=1 cargo build --locked --release --bin broker
 chown -R ubuntu:ubuntu /opt/boundless
 
 # Copy default broker configuration

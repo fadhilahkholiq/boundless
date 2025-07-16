@@ -1,0 +1,19 @@
+encryptionsalt: v1:8Ju5gqhO6S8=:v1:Qm4SNMiwFJVzvARi:dS7xuLb8mBc4rpjjD70dMbQTEvgygQ==
+config:
+  aws:region: us-west-2
+  prover:environment: custom
+  prover:gitBranch: main
+  prover:segmentSize: "21"
+  prover:snarkTimeout: "180"
+  prover:orderStreamUrl:
+    secure: v1:swFxEMsN319ZIMJE:Zcpx7x2u7V1qf0u5RoehVWbu40NDxpylvYHTQYGKOriw/jzBbf+eSrykpm1HNEdCxxl9vw==
+  prover:brokerPrivateKey:
+    secure: v1:vfmrHKJlfKFFu+lc:qnyhRdoJXlbhFfS94rjVhTwk721I7CP+gGSFCETAUuL3nMZtOGlQ6l9s7xCXWd5BEEYgdxWwOVXoag2Fezf8Lmpliu3dq7NDXgAPLHZT/sM=
+  prover:rpcUrl:
+    secure: v1:fhTlIlSAwgyxHG1t:Z9Ap9cdb2Tvsoc9SwZf/ILda5qHyKQo+zPhnCu/zfEhG267lR25jQ/HRjRuukOCwNVJQZPjYZdyPnvvtGZxorLVXQZT1are0WKoQk3ZpF35IPMIM3u0=
+  prover:rdsPassword:
+    secure: v1:mBnN09ffWrI28wg+:ZIy9DyaYa7+v7eV3i31RXxxB5BKEpEGC
+  prover:dockerToken:
+    secure: v1:4ZuM7FUrVVnZszqq:j6woFQiGijyHT1iA3Sb2OnDM0oMfwPDar7LhgplISnpCF89MqsAfNqzTRooGRFO/Q6ukxEic8KJIQMCSpXqmRNry3BcBwbg+MKtC30wrcNkYd3UJA6obrXoC
+  prover:boundlessMarketAddress: 0x8741DE8C504dC479d06188F224C468232544AD04
+  prover:setVerifierAddress: 0x8C5a8b5cC272Fe2b74D18843CF9C3aCBc952a760
