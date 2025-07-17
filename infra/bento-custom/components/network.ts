@@ -67,32 +67,7 @@ export async function setupNetwork(name: string, tags: Record<string, string>): 
         },
     });
 
-    // Security group for RDS
-    const databaseSecurityGroup = new aws.ec2.SecurityGroup(`${name}-db-sg`, {
-        vpcId: vpc.vpcId,
-        description: "Security group for RDS PostgreSQL",
-        ingress: [
-            {
-                protocol: "tcp",
-                fromPort: 5432,
-                toPort: 5432,
-                securityGroups: [instanceSecurityGroup.id],
-                description: "Allow connections from EC2 instances",
-            },
-        ],
-        egress: [
-            {
-                protocol: "-1",
-                fromPort: 0,
-                toPort: 0,
-                cidrBlocks: ["0.0.0.0/0"],
-            },
-        ],
-        tags: {
-            ...tags,
-            Name: `${name}-db-sg`,
-        },
-    });
+
 
     // Security group for broker EC2 instance (doesn't need database access)
     const brokerSecurityGroup = new aws.ec2.SecurityGroup(`${name}-broker-sg`, {
@@ -181,11 +156,10 @@ export async function setupNetwork(name: string, tags: Record<string, string>): 
         ],
         egress: [
             {
-                protocol: "tcp",
-                fromPort: 5432,
-                toPort: 5432,
-                securityGroups: [databaseSecurityGroup.id],
-                description: "Allow PostgreSQL to RDS",
+                protocol: '-1',
+                fromPort: 0,
+                toPort: 0,
+                cidrBlocks: ['0.0.0.0/0'],
             },
         ],
         tags: {
@@ -194,15 +168,31 @@ export async function setupNetwork(name: string, tags: Record<string, string>): 
         },
     });
 
-
-    // Update database security group to accept connections from RDS Proxy
-    new aws.ec2.SecurityGroupRule(`${name}-db-from-proxy`, {
-        type: "ingress",
-        fromPort: 5432,
-        toPort: 5432,
-        protocol: "tcp",
-        securityGroupId: databaseSecurityGroup.id,
-        sourceSecurityGroupId: rdsProxySecurityGroup.id,
+    // Security group for RDS
+    const databaseSecurityGroup = new aws.ec2.SecurityGroup(`${name}-db-sg`, {
+        vpcId: vpc.vpcId,
+        description: "Security group for RDS PostgreSQL",
+        ingress: [
+            {
+                protocol: "tcp",
+                fromPort: 5432,
+                toPort: 5432,
+                securityGroups: [instanceSecurityGroup.id, rdsProxySecurityGroup.id],
+                description: "Allow connections from EC2 instances",
+            },
+        ],
+        egress: [
+            {
+                protocol: "-1",
+                fromPort: 0,
+                toPort: 0,
+                cidrBlocks: ["0.0.0.0/0"],
+            },
+        ],
+        tags: {
+            ...tags,
+            Name: `${name}-db-sg`,
+        },
     });
 
     // IAM role for RDS Proxy
