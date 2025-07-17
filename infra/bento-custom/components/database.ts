@@ -70,7 +70,8 @@ export async function setupDatabase(
     const database = new aws.rds.Instance(`${name}-postgres`, {
         identifier: `${name}-postgres`,
         engine: "postgres",
-        instanceClass: "db.t4g.small",
+        engineVersion: "17.4",
+        instanceClass: "db.m7g.large",
         allocatedStorage: 20,
         maxAllocatedStorage: 500,
         storageType: "gp3",
@@ -93,6 +94,7 @@ export async function setupDatabase(
 
         // Asynchronous WAL through parameter group
         parameterGroupName: taskdbParameterGroup.name,
+        performanceInsightsEnabled: true,
 
         enabledCloudwatchLogsExports: ["postgresql"],
 
