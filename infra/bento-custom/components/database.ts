@@ -7,7 +7,7 @@ function createDatabaseSecret(
     password: pulumi.Output<string>,
     databaseEndpoint: pulumi.Output<string>,
     tags: Record<string, string>
-): aws.secretsmanager.Secret {
+) {
     const secret = new aws.secretsmanager.Secret(`${name}-db-secret`, {
         description: "Database credentials for Bento PostgreSQL",
         recoveryWindowInDays: 0, // TODO(ec2): fixme
@@ -18,21 +18,15 @@ function createDatabaseSecret(
     });
 
     // Create the secret version with the password
-    new aws.secretsmanager.SecretVersion(`${name}-db-secret-version`, {
+    return new aws.secretsmanager.SecretVersion(`${name}-db-secret-version`, {
         secretId: secret.id,
         secretString: pulumi.all([password, databaseEndpoint]).apply(([pwd, endpoint]) =>
             JSON.stringify({
                 username: "worker",
                 password: pwd,
-                engine: "postgres",
-                host: endpoint,
-                port: 5432,
-                dbname: "taskdb"
             })
         ),
     });
-
-    return secret;
 }
 
 export async function setupDatabase(
@@ -115,16 +109,18 @@ export async function setupDatabase(
         vpcSubnetIds: network.privateSubnetIds,
         vpcSecurityGroupIds: [network.rdsProxySecurityGroup.id],
         idleClientTimeout: 1800, // 30 minutes
+        debugLogging: false,
 
         // Authentication will be set up via target group
         auths: [{
             authScheme: "SECRETS",
             // Use the configured RDS password
+            iamAuth: "DISABLED",
             secretArn: databaseSecret.arn,
         }],
 
         // Require TLS for secure connections (matching order stream)
-        requireTls: false,
+        requireTls: true,
 
         tags: {
             ...tags,
@@ -160,7 +156,8 @@ export async function setupDatabase(
             // const host = endpoint.includes(':') ? endpoint : `${endpoint}:5432`;
             // let ret = `postgresql://worker:${password}@${host}/taskdb?sslmode=require`;
             // return encodeURI(ret);
-            return pulumi.interpolate`postgresql://worker:${password}@${rdsProxy.endpoint}/taskdb?sslmode=require`;
+            return pulumi.interpolate`postgresql://worker:${password}@${rdsProxy.endpoint}:5432/taskdb?sslmode=require`;
+            // return pulumi.interpolate`postgresql://worker:${password}@${database.endpoint}/taskdb?sslmode=require`;
         }),
         secret: databaseSecret,
     };

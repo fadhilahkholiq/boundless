@@ -112,6 +112,31 @@ export async function createInstanceProfile(
         policyArn: customPolicy.arn,
     });
 
+    const dbPolicy = new aws.iam.Policy(`${name}-db-policy`, {
+        description: "Policy for ECS tasks to access RDS database",
+        policy: pulumi.all([name]).apply(([name]) => JSON.stringify({
+            Version: "2012-10-17",
+            Statement: [
+                {
+                    Effect: "Allow",
+                    Action: [
+                        "rds-db:connect"
+                    ],
+                    Resource: `arn:aws:rds-db:*:*:dbuser:*/*`,
+                },
+            ],
+        })),
+        tags: {
+            ...tags,
+            Name: `${name}-db-policy`,
+        },
+    });
+
+    new aws.iam.RolePolicyAttachment(`${name}-db-policy-attachment`, {
+        role: role.name,
+        policyArn: dbPolicy.arn,
+    });
+
     // Create instance profile
     const instanceProfile = new aws.iam.InstanceProfile(`${name}-instance-profile`, {
         role: role.name,
