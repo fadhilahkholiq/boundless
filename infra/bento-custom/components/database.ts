@@ -51,11 +51,25 @@ export async function setupDatabase(
         },
     });
 
+    const taskdbParameterGroup = new aws.rds.ParameterGroup(
+        `${name}-db-params`,
+        {
+            family: 'postgres17',
+            description: 'Parameter group for taskdb with logical replication enabled',
+            parameters: [
+                {
+                    name: 'synchronous_commit',
+                    value: 'off',
+                    applyMethod: 'pending-reboot',
+                },
+            ],
+        },
+    );
+
     // Create PostgreSQL instance
     const database = new aws.rds.Instance(`${name}-postgres`, {
         identifier: `${name}-postgres`,
         engine: "postgres",
-        engineVersion: "17.2",
         instanceClass: "db.t4g.small",
         allocatedStorage: 20,
         maxAllocatedStorage: 500,
@@ -77,6 +91,9 @@ export async function setupDatabase(
         backupWindow: "03:00-04:00",
         maintenanceWindow: "sun:04:00-sun:05:00",
 
+        // Asynchronous WAL through parameter group
+        parameterGroupName: taskdbParameterGroup.name,
+
         enabledCloudwatchLogsExports: ["postgresql"],
 
         tags: {
@@ -95,6 +112,7 @@ export async function setupDatabase(
         roleArn: network.rdsProxyRole.arn,
         vpcSubnetIds: network.privateSubnetIds,
         vpcSecurityGroupIds: [network.rdsProxySecurityGroup.id],
+        idleClientTimeout: 1800, // 30 minutes
 
         // Authentication will be set up via target group
         auths: [{
