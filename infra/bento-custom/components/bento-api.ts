@@ -227,7 +227,7 @@ export async function setupBentoAPI(
         loadBalancerType: "application",
         internal: true, // Internal ALB for VPC access only
         subnets: network.vpc.privateSubnetIds,
-        securityGroups: [network.instanceSecurityGroup.id],
+        securityGroups: [network.instanceSecurityGroup.id, network.brokerSecurityGroup.id],
 
         tags: {
             ...tags,
