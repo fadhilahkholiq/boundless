@@ -84,7 +84,7 @@ async function main() {
         // Database endpoints (private)
         databaseEndpoint: database.instance.endpoint,
         databaseProxyEndpoint: database.proxy.endpoint,
-        redisEndpoint: cache.cluster.cacheNodes[0].address,
+        redisEndpoint: cache.connectionUrl,
         s3BucketName: storage.bucket.id,
         dockerTokenArn: secrets.dockerToken,
         // Monitoring

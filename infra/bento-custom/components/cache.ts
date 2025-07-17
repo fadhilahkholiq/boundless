@@ -7,6 +7,10 @@ export async function setupCache(
     tags: Record<string, string>,
     subnetIds?: pulumi.Input<pulumi.Input<string>[]>
 ) {
+    const config = new pulumi.Config();
+    const maxRedisSize = config.getNumber('rediSizeMax') ?? 100;
+    const minRedisEcpus = config.getNumber('redisEcpuMin') ?? 1000;
+
     // Use provided subnets when co-locating with GPU instances; fallback to all private subnets
     const chosenSubnetIds = subnetIds ?? network.privateSubnetIds;
 
@@ -20,34 +24,44 @@ export async function setupCache(
         },
     });
 
-    // Create ElastiCache Redis cluster
-    const redisCluster = new aws.elasticache.Cluster(`${name}-redis`, {
-        engine: "redis",
-        engineVersion: "7.0",
-        nodeType: "cache.r7g.large",
-        numCacheNodes: 1,
-
-        subnetGroupName: cacheSubnetGroup.name,
-        securityGroupIds: [network.cacheSecurityGroup.id],
-
-        snapshotRetentionLimit: 5,
-        snapshotWindow: "03:00-05:00",
-        maintenanceWindow: "sun:05:00-sun:07:00",
-
-        parameterGroupName: "default.redis7",
-
-        // Enable automatic failover for production
-        // automaticFailoverEnabled: true,
-
-        tags: {
-            ...tags,
-            Name: `${name}-redis`,
+    const redis = new aws.elasticache.ServerlessCache(
+        `${name}-redis`,
+        {
+            engine: 'valkey',
+            name: `${name}-redis`,
+            cacheUsageLimits: {
+                dataStorage: {
+                    maximum: maxRedisSize,
+                    unit: 'GB',
+                },
+                ecpuPerSeconds: [
+                    {
+                        maximum: 15000000,
+                        minimum: minRedisEcpus,
+                    },
+                ],
+            },
+            dailySnapshotTime: '09:00',
+            description: 'workflow cache managed in redis',
+            majorEngineVersion: '8',
+            snapshotRetentionLimit: 1,
+            securityGroupIds: [network.cacheSecurityGroup.id],
+            // you are only allowed a max 3 subnets
+            subnetIds: cacheSubnetGroup.subnetIds,
+            tags: {
+                ...tags,
+                Name: `${name}-redis`,
+            },
         },
-    });
+        { ignoreChanges: ['subnetIds'], deleteBeforeReplace: true }
+    );
+
+    const redisEndpointHost = redis.endpoints.apply((endpoints) => endpoints[0].address);
+    const redisEndpointPort = redis.endpoints.apply((endpoints) => endpoints[0].port);
+    const redisEndpointUrl = pulumi.interpolate`rediss://${redisEndpointHost}:${redisEndpointPort}`;
 
     return {
-        cluster: redisCluster,
-        endpoint: redisCluster.cacheNodes[0].address,
-        connectionUrl: pulumi.interpolate`redis://${redisCluster.cacheNodes[0].address}:6379`,
+        cluster: redis,
+        connectionUrl: redisEndpointUrl,
     };
 }

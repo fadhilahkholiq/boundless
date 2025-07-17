@@ -281,73 +281,73 @@ export async function setupMonitoring(
 
     createDatabaseAlarms();
 
-    // ElastiCache Redis Monitoring
-    const createCacheAlarms = () => {
-        // Cache CPU
-        new aws.cloudwatch.MetricAlarm(`${name}-cache-cpu-high`, {
-            name: `${name}-cache-cpu-high`,
-            comparisonOperator: "GreaterThanThreshold",
-            evaluationPeriods: 2,
-            metricName: "CPUUtilization",
-            namespace: "AWS/ElastiCache",
-            period: 300,
-            statistic: "Average",
-            threshold: 75,
-            alarmDescription: "High CPU utilization on Redis cache",
-            alarmActions: [alertsTopic.arn],
-            dimensions: {
-                CacheClusterId: cache.cluster.clusterId,
-            },
-            tags: {
-                ...tags,
-                Name: `${name}-cache-cpu-high`,
-            },
-        });
+    // // ElastiCache Redis Monitoring
+    // const createCacheAlarms = () => {
+    //     // Cache CPU
+    //     new aws.cloudwatch.MetricAlarm(`${name}-cache-cpu-high`, {
+    //         name: `${name}-cache-cpu-high`,
+    //         comparisonOperator: "GreaterThanThreshold",
+    //         evaluationPeriods: 2,
+    //         metricName: "CPUUtilization",
+    //         namespace: "AWS/ElastiCache",
+    //         period: 300,
+    //         statistic: "Average",
+    //         threshold: 75,
+    //         alarmDescription: "High CPU utilization on Redis cache",
+    //         alarmActions: [alertsTopic.arn],
+    //         dimensions: {
+    //             CacheClusterId: cache.cluster.clusterId,
+    //         },
+    //         tags: {
+    //             ...tags,
+    //             Name: `${name}-cache-cpu-high`,
+    //         },
+    //     });
 
-        // Cache memory usage
-        new aws.cloudwatch.MetricAlarm(`${name}-cache-memory-high`, {
-            name: `${name}-cache-memory-high`,
-            comparisonOperator: "GreaterThanThreshold",
-            evaluationPeriods: 2,
-            metricName: "DatabaseMemoryUsagePercentage",
-            namespace: "AWS/ElastiCache",
-            period: 300,
-            statistic: "Average",
-            threshold: 85,
-            alarmDescription: "High memory usage on Redis cache",
-            alarmActions: [alertsTopic.arn],
-            dimensions: {
-                CacheClusterId: cache.cluster.clusterId,
-            },
-            tags: {
-                ...tags,
-                Name: `${name}-cache-memory-high`,
-            },
-        });
+    //     // Cache memory usage
+    //     new aws.cloudwatch.MetricAlarm(`${name}-cache-memory-high`, {
+    //         name: `${name}-cache-memory-high`,
+    //         comparisonOperator: "GreaterThanThreshold",
+    //         evaluationPeriods: 2,
+    //         metricName: "DatabaseMemoryUsagePercentage",
+    //         namespace: "AWS/ElastiCache",
+    //         period: 300,
+    //         statistic: "Average",
+    //         threshold: 85,
+    //         alarmDescription: "High memory usage on Redis cache",
+    //         alarmActions: [alertsTopic.arn],
+    //         dimensions: {
+    //             CacheClusterId: cache.cluster.clusterId,
+    //         },
+    //         tags: {
+    //             ...tags,
+    //             Name: `${name}-cache-memory-high`,
+    //         },
+    //     });
 
-        // Cache evictions
-        new aws.cloudwatch.MetricAlarm(`${name}-cache-evictions`, {
-            name: `${name}-cache-evictions`,
-            comparisonOperator: "GreaterThanThreshold",
-            evaluationPeriods: 2,
-            metricName: "Evictions",
-            namespace: "AWS/ElastiCache",
-            period: 300,
-            statistic: "Sum",
-            threshold: 100,
-            alarmDescription: "High number of evictions on Redis cache",
-            alarmActions: [alertsTopic.arn],
-            dimensions: {
-                CacheClusterId: cache.cluster.clusterId,
-            },
-            tags: {
-                ...tags,
-                Name: `${name}-cache-evictions`,
-            },
-        });
-    };
+    //     // Cache evictions
+    //     new aws.cloudwatch.MetricAlarm(`${name}-cache-evictions`, {
+    //         name: `${name}-cache-evictions`,
+    //         comparisonOperator: "GreaterThanThreshold",
+    //         evaluationPeriods: 2,
+    //         metricName: "Evictions",
+    //         namespace: "AWS/ElastiCache",
+    //         period: 300,
+    //         statistic: "Sum",
+    //         threshold: 100,
+    //         alarmDescription: "High number of evictions on Redis cache",
+    //         alarmActions: [alertsTopic.arn],
+    //         dimensions: {
+    //             CacheClusterId: cache.cluster.clusterId,
+    //         },
+    //         tags: {
+    //             ...tags,
+    //             Name: `${name}-cache-evictions`,
+    //         },
+    //     });
+    // };
 
-    createCacheAlarms();
+    // createCacheAlarms();
 
     // ECS Fargate Monitoring (Aux Agent)
     const createEcsAlarms = () => {
@@ -540,24 +540,24 @@ export async function setupMonitoring(
                         title: "RDS Performance",
                     },
                 },
-                {
-                    type: "metric",
-                    x: 6,
-                    y: 6,
-                    width: 6,
-                    height: 6,
-                    properties: {
-                        metrics: [
-                            ["AWS/ElastiCache", "CPUUtilization", "CacheClusterId", cache.cluster.clusterId],
-                            [".", "DatabaseMemoryUsagePercentage", ".", "."],
-                            [".", "Evictions", ".", "."],
-                        ],
-                        period: 300,
-                        stat: "Average",
-                        region: region.name,
-                        title: "ElastiCache Performance",
-                    },
-                },
+                // {
+                //     type: "metric",
+                //     x: 6,
+                //     y: 6,
+                //     width: 6,
+                //     height: 6,
+                //     properties: {
+                //         metrics: [
+                //             ["AWS/ElastiCache", "CPUUtilization", "CacheClusterId", cache.cluster.clusterId],
+                //             [".", "DatabaseMemoryUsagePercentage", ".", "."],
+                //             [".", "Evictions", ".", "."],
+                //         ],
+                //         period: 300,
+                //         stat: "Average",
+                //         region: region.name,
+                //         title: "ElastiCache Performance",
+                //     },
+                // },
                 {
                     type: "log",
                     x: 0,
