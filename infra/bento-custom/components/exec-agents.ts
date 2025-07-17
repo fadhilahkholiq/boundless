@@ -16,7 +16,7 @@ function execAgentContainerDef(
     dockerTokenArn: string,
     region: string,
     n: number
-): aws.ecs.ContainerDefinition[] {
+) {
     return [...Array(n)].map((_, i) => {
         return {
             name: `exec-agent-${i}`,
@@ -44,6 +44,11 @@ function execAgentContainerDef(
                 { name: "S3_ACCESS_KEY", value: s3AccessKeyId },
                 { name: "S3_SECRET_KEY", value: s3SecretKey },
             ],
+
+            restartPolicy: {
+                enabled: true,
+                restartAttemptPeriod: 60, // Restart after 60 seconds if the agent fails
+            },
 
             logConfiguration: {
                 logDriver: "awslogs",
