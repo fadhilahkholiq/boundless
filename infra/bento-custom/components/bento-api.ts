@@ -70,8 +70,8 @@ export async function setupBentoAPI(
         family: `${name}-bento-api`,
         requiresCompatibilities: ["FARGATE"],
         networkMode: "awsvpc",
-        cpu: "1024", // 1 vCPU
-        memory: "2048", // 2GB RAM
+        cpu: "2048", // 2 vCPU
+        memory: "4096", // 4GB RAM
         executionRoleArn: executionRole.arn,
         taskRoleArn: taskRole.arn,
 

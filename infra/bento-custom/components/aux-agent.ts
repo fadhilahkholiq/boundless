@@ -33,8 +33,8 @@ export async function setupAuxAgent(
         family: `${name}-aux-agent`,
         networkMode: "awsvpc",
         requiresCompatibilities: ["FARGATE"],
-        cpu: "1024", // 1 vCPU
-        memory: "2048", // 2 GB
+        cpu: "2048", // 2 vCPU
+        memory: "4096", // 4 GB
         taskRoleArn: taskRole.arn,
         executionRoleArn: executionRole.arn,
 
