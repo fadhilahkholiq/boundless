@@ -304,7 +304,7 @@ RPC_URL=$RPC_URL
 ORDER_STREAM_URL=$ORDER_STREAM_URL
 DATABASE_URL=sqlite:///opt/boundless/data/broker.db
 BENTO_API_URL=${bentoApiUrl}
-RUST_LOG=info
+RUST_LOG=-info,broker=debug,boundless_market=debug
 RUST_BACKTRACE=1
 BOUNDLESS_MARKET_ADDRESS=$BOUNDLESS_MARKET_ADDRESS
 SET_VERIFIER_ADDRESS=$SET_VERIFIER_ADDRESS
@@ -358,7 +358,7 @@ RISC0_SKIP_BUILD=1 cargo build --locked --release --bin broker
 chown -R ubuntu:ubuntu /opt/boundless
 
 # Copy broker configuration
-cp infra/bento-custom/tomls/broker-prod-84532.toml /opt/boundless/broker.toml
+cp infra/bento-custom/tomls/broker.toml /opt/boundless/broker.toml
 chown ubuntu:ubuntu /opt/boundless/broker.toml
 
 

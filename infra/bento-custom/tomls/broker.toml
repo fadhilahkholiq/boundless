@@ -1,7 +1,7 @@
 [market]
 mcycle_price = "0"
 mcycle_price_stake_token = "0" # will fill any lock-expired orders regardless of cost
-peak_prove_khz = 3000
+peak_prove_khz = 300000
 min_deadline = 120
 lookback_blocks = 100
 max_stake = "0.5"
@@ -13,12 +13,19 @@ balance_warn_threshold = "0.025"
 balance_error_threshold = "0.01"
 stake_balance_warn_threshold = "5"
 stake_balance_error_threshold = "1"
-priority_requestor_addresses = ["0x47c76E56Ad9316A5c1ab17CBa87a1Cc134552183"]
+priority_requestor_addresses = [
+  "0x47c76E56Ad9316A5c1ab17CBa87a1Cc134552183", 
+  "0x734dF7809c4ef94Da037449C287166D114503198"
+  ]
 # max_fetch_retries = 2
 allow_client_addresses = [
   "0x47c76E56Ad9316A5c1ab17CBa87a1Cc134552183", # Signal contract on Base Sepolia
+  "0x734dF7809c4ef94Da037449C287166D114503198" # Signal contract on Base mainnet
 ]
 # lockin_priority_gas = 100
+lockin_gas_estimate = 0
+fulfill_gas_estimate = 0
+groth16_verify_gas_estimate = 0
 
 [prover]
 bonsai_r0_zkvm_ver = '2.3.0'
