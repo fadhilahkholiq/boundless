@@ -8,6 +8,7 @@ max_stake = "0.5"
 max_file_size = 50_000_000
 max_mcycle_limit = 8000
 max_concurrent_proofs = 1
+max_concurrent_preflights = 1
 balance_warn_threshold = "0.025"
 balance_error_threshold = "0.01"
 stake_balance_warn_threshold = "5"
@@ -30,8 +31,6 @@ req_retry_count = 3
 req_retry_sleep_ms = 500
 proof_retry_count = 1
 proof_retry_sleep_ms = 500
-# set_builder_guest_path = "./target/riscv-guest/riscv32im-risc0-zkvm-elf/release/set-builder-guest"
-# assessor_set_guest_path = "./target/riscv-guest/riscv32im-risc0-zkvm-elf/release/assessor-guest"
 
 [batcher]
 batch_max_time = 1000
