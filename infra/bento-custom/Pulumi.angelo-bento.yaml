@@ -15,5 +15,5 @@ config:
     secure: v1:mBnN09ffWrI28wg+:ZIy9DyaYa7+v7eV3i31RXxxB5BKEpEGC
   prover:dockerToken:
     secure: v1:4ZuM7FUrVVnZszqq:j6woFQiGijyHT1iA3Sb2OnDM0oMfwPDar7LhgplISnpCF89MqsAfNqzTRooGRFO/Q6ukxEic8KJIQMCSpXqmRNry3BcBwbg+MKtC30wrcNkYd3UJA6obrXoC
-  prover:boundlessMarketAddress: 0x8741DE8C504dC479d06188F224C468232544AD04
+  prover:boundlessMarketAddress: 0x6B7ABa661041164b8dB98E30AE1454d2e9D5f14b
   prover:setVerifierAddress: 0x8C5a8b5cC272Fe2b74D18843CF9C3aCBc952a760
