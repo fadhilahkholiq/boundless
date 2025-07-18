@@ -2,7 +2,7 @@ encryptionsalt: v1:8Ju5gqhO6S8=:v1:Qm4SNMiwFJVzvARi:dS7xuLb8mBc4rpjjD70dMbQTEvgy
 config:
   aws:region: us-west-2
   prover:environment: custom
-  prover:gitBranch: main
+  prover:gitBranch: ec2/debug
   prover:segmentSize: "21"
   prover:snarkTimeout: "180"
   prover:orderStreamUrl:
