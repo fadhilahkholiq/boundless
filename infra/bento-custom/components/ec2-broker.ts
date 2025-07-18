@@ -357,8 +357,8 @@ cd /opt/boundless/repo
 RISC0_SKIP_BUILD=1 cargo build --locked --release --bin broker
 chown -R ubuntu:ubuntu /opt/boundless
 
-# Copy default broker configuration
-cp broker-template.toml /opt/boundless/broker.toml
+# Copy broker configuration
+cp infra/bento-custom/tomls/broker-prod-84532.toml /opt/boundless/broker.toml
 chown ubuntu:ubuntu /opt/boundless/broker.toml
 
 
