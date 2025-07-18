@@ -23,9 +23,9 @@ allow_client_addresses = [
   "0x734dF7809c4ef94Da037449C287166D114503198" # Signal contract on Base mainnet
 ]
 # lockin_priority_gas = 100
-lockin_gas_estimate = 1
-fulfill_gas_estimate = 1
-groth16_verify_gas_estimate = 1
+# lockin_gas_estimate = 1
+# fulfill_gas_estimate = 1
+# groth16_verify_gas_estimate = 1
 
 [prover]
 bonsai_r0_zkvm_ver = '2.3.0'
