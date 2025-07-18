@@ -48,8 +48,7 @@ export async function setupAuxAgent(
             secrets.dockerToken,
         ]).apply(([dbUrl, redisUrl, s3Bucket, s3AccessKeyId, s3SecretKey, logGroupName, dockerTokenArn]) => JSON.stringify([{
             name: "aux-agent",
-            // image: "risczero/risc0-bento-agent:stable",
-            image: "angelor0/bento-agent:v2.1.1",
+            image: "risczero/risc0-bento-agent:2.3.0",
             repositoryCredentials: {
                 credentialsParameter: dockerTokenArn,
             },

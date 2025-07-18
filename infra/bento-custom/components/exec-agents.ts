@@ -20,8 +20,7 @@ function execAgentContainerDef(
     return [...Array(n)].map((_, i) => {
         return {
             name: `exec-agent-${i}`,
-            // image: "risczero/risc0-bento-agent:stable",
-            image: "angelor0/bento-agent:v2.1.1",
+            image: "risczero/risc0-bento-agent:2.3.0",
             repositoryCredentials: {
                 credentialsParameter: dockerTokenArn,
             },
