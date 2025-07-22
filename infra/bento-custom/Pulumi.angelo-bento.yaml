@@ -6,14 +6,14 @@ config:
   prover:segmentSize: "21"
   prover:snarkTimeout: "180"
   prover:orderStreamUrl:
-    secure: v1:swFxEMsN319ZIMJE:Zcpx7x2u7V1qf0u5RoehVWbu40NDxpylvYHTQYGKOriw/jzBbf+eSrykpm1HNEdCxxl9vw==
+    secure: v1:X90ArDDqx5q+srIt:53bbJQKwb+ouD698BVDEm6kN0zYxCJ6ztqCQr404A6xBGLPGr2l88FnxIUnXGoY7bggq4w==
   prover:brokerPrivateKey:
     secure: v1:vfmrHKJlfKFFu+lc:qnyhRdoJXlbhFfS94rjVhTwk721I7CP+gGSFCETAUuL3nMZtOGlQ6l9s7xCXWd5BEEYgdxWwOVXoag2Fezf8Lmpliu3dq7NDXgAPLHZT/sM=
   prover:rpcUrl:
-    secure: v1:fhTlIlSAwgyxHG1t:Z9Ap9cdb2Tvsoc9SwZf/ILda5qHyKQo+zPhnCu/zfEhG267lR25jQ/HRjRuukOCwNVJQZPjYZdyPnvvtGZxorLVXQZT1are0WKoQk3ZpF35IPMIM3u0=
+    secure: v1:f42cT5e/+dL4Qvso:m7gd4hJmyXOjMtAOf9URKmYgzYr/7+pJCmKViB8/3c4HiEjCIK+iDIASYr+BiOz5SwozFPJox0DCRu1B3HDfSuddVDXj8xeUx6abZzost2b9a6zpLQk=
   prover:rdsPassword:
     secure: v1:mBnN09ffWrI28wg+:ZIy9DyaYa7+v7eV3i31RXxxB5BKEpEGC
   prover:dockerToken:
     secure: v1:4ZuM7FUrVVnZszqq:j6woFQiGijyHT1iA3Sb2OnDM0oMfwPDar7LhgplISnpCF89MqsAfNqzTRooGRFO/Q6ukxEic8KJIQMCSpXqmRNry3BcBwbg+MKtC30wrcNkYd3UJA6obrXoC
-  prover:boundlessMarketAddress: 0x6B7ABa661041164b8dB98E30AE1454d2e9D5f14b
+  prover:boundlessMarketAddress: 0x26759dbB201aFbA361Bec78E097Aa3942B0b4AB8
   prover:setVerifierAddress: 0x8C5a8b5cC272Fe2b74D18843CF9C3aCBc952a760
