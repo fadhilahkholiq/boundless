@@ -10,7 +10,7 @@ config:
   prover:brokerPrivateKey:
     secure: v1:vfmrHKJlfKFFu+lc:qnyhRdoJXlbhFfS94rjVhTwk721I7CP+gGSFCETAUuL3nMZtOGlQ6l9s7xCXWd5BEEYgdxWwOVXoag2Fezf8Lmpliu3dq7NDXgAPLHZT/sM=
   prover:rpcUrl:
-    secure: v1:f42cT5e/+dL4Qvso:m7gd4hJmyXOjMtAOf9URKmYgzYr/7+pJCmKViB8/3c4HiEjCIK+iDIASYr+BiOz5SwozFPJox0DCRu1B3HDfSuddVDXj8xeUx6abZzost2b9a6zpLQk=
+    secure: v1:tQkaIa2HXGIenAHF:MY4PsKaQ1BipRmmFIGOEYsUGUcLWUpyuW7i8/MQtD1TgSB6UmTWM9lfWvEfmYNe/AKCbaGzrkCmFOBb5ZCw6VECHbsWP8miACKvumI/SE6DjWN4r9zg=
   prover:rdsPassword:
     secure: v1:mBnN09ffWrI28wg+:ZIy9DyaYa7+v7eV3i31RXxxB5BKEpEGC
   prover:dockerToken:
