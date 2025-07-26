@@ -84,7 +84,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Optional additional gas to add to the transaction for lockinRequest, good
 # for increasing the priority if competing with multiple provers during the
 # same block
-lockin_priority_gas = 4700000000000
+lockin_priority_gas = 125000000
 # Optional balance warning threshold (in native token)
 #
 # If the submitter balance drops below this the broker will issue warning logs
