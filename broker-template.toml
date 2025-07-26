@@ -13,7 +13,7 @@ mcycle_price_stake_token = "0.00001"
 # Optional priority requestor addresses that can bypass the mcycle limit and max input size limit.
 #
 # If enabled, the order will be preflighted without constraints.
-#priority_requestor_addresses = []
+priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0"]
 # Estimated peak performance of the proving cluster, in kHz.
 #
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
