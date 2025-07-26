@@ -19,11 +19,11 @@ priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0x
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
 # can be derived from benchmarking using Bento CLI or from data based on fulfilling market orders.
 # For more information, see https://docs.beboundless.xyz/provers/broker#benchmarking-bento
-peak_prove_khz = 650
+peak_prove_khz = 500
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
-max_mcycle_limit = 500
+max_mcycle_limit = 300
 # Max journal size in bytes
 #
 # Orders that produce a journal larger than this size in preflight will be skipped. Since journals
@@ -34,7 +34,7 @@ max_journal_bytes = 10000
 #
 # If there is not enough time left before the deadline, the prover may not be able to complete
 # proving of the request and finalize the batch for publishing before expiration.
-min_deadline = 180
+min_deadline = 120
 # On startup, the number of blocks to look back for possible open orders.
 lookback_blocks = 0 # 300 blocks ~ 1 hour @ 12s block times
 # Max stake amount, denominated in the Boundless staking token.
@@ -48,7 +48,7 @@ max_file_size = 50_000_000
 # Max concurrent locks
 #
 # Maximum number of concurrent proofs that can be processed at once
-max_concurrent_proofs = 2
+max_concurrent_proofs = 1
 # Maximum number of orders to concurrently work on pricing
 #
 # Used to limit pricing tasks spawned to prevent overwhelming the system
@@ -59,7 +59,7 @@ max_concurrent_preflights = 8
 # - "random": Process orders in random order to distribute competition among provers (default)
 # - "observation_time": Process orders in the order they were observed (FIFO)
 # - "shortest_expiry": Process orders by shortest expiry first (earliest deadline)
-order_pricing_priority = "observation_time"
+order_pricing_priority = "shortest_expiry"
 # Order commitment priority mode
 #
 # Determines how orders are prioritized when committing to prove them. Options:
@@ -84,7 +84,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Optional additional gas to add to the transaction for lockinRequest, good
 # for increasing the priority if competing with multiple provers during the
 # same block
-lockin_priority_gas = 125000000
+lockin_priority_gas = 130000000
 # Optional balance warning threshold (in native token)
 #
 # If the submitter balance drops below this the broker will issue warning logs
