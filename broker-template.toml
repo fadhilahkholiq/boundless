@@ -19,11 +19,11 @@ mcycle_price_stake_token = "0.00001"
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
 # can be derived from benchmarking using Bento CLI or from data based on fulfilling market orders.
 # For more information, see https://docs.beboundless.xyz/provers/broker#benchmarking-bento
-peak_prove_khz = 300
+peak_prove_khz = 650
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
-max_mcycle_limit = 550
+max_mcycle_limit = 500
 # Max journal size in bytes
 #
 # Orders that produce a journal larger than this size in preflight will be skipped. Since journals
