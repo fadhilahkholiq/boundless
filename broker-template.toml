@@ -23,7 +23,7 @@ peak_prove_khz = 300
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
-max_mcycle_limit = 300
+max_mcycle_limit = 550
 # Max journal size in bytes
 #
 # Orders that produce a journal larger than this size in preflight will be skipped. Since journals
@@ -48,7 +48,7 @@ max_file_size = 50_000_000
 # Max concurrent locks
 #
 # Maximum number of concurrent proofs that can be processed at once
-max_concurrent_proofs = 1
+max_concurrent_proofs = 2
 # Maximum number of orders to concurrently work on pricing
 #
 # Used to limit pricing tasks spawned to prevent overwhelming the system
@@ -84,7 +84,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Optional additional gas to add to the transaction for lockinRequest, good
 # for increasing the priority if competing with multiple provers during the
 # same block
-lockin_priority_gas = 500
+lockin_priority_gas = 4700000000000
 # Optional balance warning threshold (in native token)
 #
 # If the submitter balance drops below this the broker will issue warning logs
