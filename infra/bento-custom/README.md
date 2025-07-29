@@ -5,6 +5,7 @@ This directory contains the Pulumi infrastructure code for deploying a custom Be
 ## Architecture Overview
 
 ### Compute Resources
+
 - **Broker** (1x t3.medium EC2): Dedicated instance with SQLite database
 - **Bento API** (AWS Fargate): ECS service providing REST API for Bento proving
 - **Exec Agents** (1x r7iz.2xlarge): ECS with 4 exec agent containers
@@ -13,6 +14,7 @@ This directory contains the Pulumi infrastructure code for deploying a custom Be
 - **Aux Agent** (AWS Fargate): ECS service for monitoring and requeuing
 
 ### Data Services
+
 - **PostgreSQL** (db.t4g.micro): Task database for ECS services
 - **RDS Proxy**: Connection pooling for PostgreSQL
 - **ElastiCache Redis** (cache.r7g.large): Caching layer
@@ -20,6 +22,7 @@ This directory contains the Pulumi infrastructure code for deploying a custom Be
 - **SQLite Database**: Local broker state
 
 ### Networking
+
 - Custom VPC with public and private subnets
 - Services deployed in private subnets
 - Security groups for service isolation
@@ -255,39 +258,39 @@ pulumi stack rm <stack-name>
 
 ## Configuration Reference
 
-| Key | Description | Required |
-|-----|-------------|----------|
-| `environment` | Environment name | Yes |
-| `gitBranch` | Git branch to use | Yes |
-| `segmentSize` | Bento segment size | Yes |
-| `snarkTimeout` | SNARK timeout in seconds | Yes |
-| `brokerPrivateKey` | Broker private key (secret) | Yes |
-| `rpcUrl` | Ethereum RPC endpoint (secret) | Yes |
-| `boundlessMarketAddress` | Market contract address | No |
-| `setVerifierAddress` | Verifier contract address | No |
+| Key                      | Description                    | Required |
+| ------------------------ | ------------------------------ | -------- |
+| `environment`            | Environment name               | Yes      |
+| `gitBranch`              | Git branch to use              | Yes      |
+| `segmentSize`            | Bento segment size             | Yes      |
+| `snarkTimeout`           | SNARK timeout in seconds       | Yes      |
+| `brokerPrivateKey`       | Broker private key (secret)    | Yes      |
+| `rpcUrl`                 | Ethereum RPC endpoint (secret) | Yes      |
+| `boundlessMarketAddress` | Market contract address        | No       |
+| `setVerifierAddress`     | Verifier contract address      | No       |
 
 ## Instance Types
 
-| Component | Instance Type | Count | vCPUs | Memory |
-|-----------|---------------|-------|-------|--------|
-| Broker | t3.medium | 1 | 2 | 4 GB |
-| Bento API | Fargate | 1 | 1 | 2 GB |
-| Exec Agents | r7iz.2xlarge | 1 | 8 | 64 GB |
-| SNARK Agent | c7a.4xlarge | 1 | 16 | 32 GB |
-| GPU Provers | g6e.xlarge | 8 | 4 | 16 GB |
-| Aux Agent | Fargate | 1 | 1 | 2 GB |
+| Component   | Instance Type | Count | vCPUs | Memory |
+| ----------- | ------------- | ----- | ----- | ------ |
+| Broker      | t3.medium     | 1     | 2     | 4 GB   |
+| Bento API   | Fargate       | 1     | 1     | 2 GB   |
+| Exec Agents | r7iz.2xlarge  | 1     | 8     | 64 GB  |
+| SNARK Agent | c7a.4xlarge   | 1     | 16    | 32 GB  |
+| GPU Provers | g6e.xlarge    | 8     | 4     | 16 GB  |
+| Aux Agent   | Fargate       | 1     | 1     | 2 GB   |
 
 ## Outputs
 
-| Output | Description |
-|--------|-------------|
-| `brokerInstanceArn` | Broker Auto Scaling Group ARN |
-| `bentoAPIServiceArn` | Bento API ECS service ARN |
-| `bentoAPIUrl` | Bento API internal URL |
-| `ecsClusterArn` | ECS cluster ARN |
-| `databaseEndpoint` | RDS database endpoint |
-| `databaseProxyEndpoint` | RDS proxy endpoint |
-| `redisEndpoint` | ElastiCache Redis endpoint |
-| `dashboardUrl` | CloudWatch dashboard URL |
-| `alertsTopicArn` | SNS topic ARN for alerts |
-| `vpcId` | VPC ID |
+| Output                  | Description                   |
+| ----------------------- | ----------------------------- |
+| `brokerInstanceArn`     | Broker Auto Scaling Group ARN |
+| `bentoAPIServiceArn`    | Bento API ECS service ARN     |
+| `bentoAPIUrl`           | Bento API internal URL        |
+| `ecsClusterArn`         | ECS cluster ARN               |
+| `databaseEndpoint`      | RDS database endpoint         |
+| `databaseProxyEndpoint` | RDS proxy endpoint            |
+| `redisEndpoint`         | ElastiCache Redis endpoint    |
+| `dashboardUrl`          | CloudWatch dashboard URL      |
+| `alertsTopicArn`        | SNS topic ARN for alerts      |
+| `vpcId`                 | VPC ID                        |
