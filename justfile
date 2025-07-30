@@ -250,7 +250,7 @@ localnet action="up": check-deps
             $HIT_POINTS_ADDRESS "mint(address, uint256)" $DEFAULT_ADDRESS $DEPOSIT_AMOUNT
 
         if [ $CI -eq 1 ]; then
-            REPO_ROOT_DIR=$(git rev-parse --show-toplevel)
+            REPO_ROOT_DIR=${REPO_ROOT:-$(git rev-parse --show-toplevel)}
             DEPLOYMENT_SECRETS_PATH="${REPO_ROOT_DIR}/contracts/deployment_secrets.toml"
             echo "Creating ${DEPLOYMENT_SECRETS_PATH}..."
             echo "[chains.anvil]" > $DEPLOYMENT_SECRETS_PATH

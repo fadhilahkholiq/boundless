@@ -215,6 +215,7 @@ jobs:
         env:
           CI: 1
           RISC0_DEV_MODE: 1
+          REPO_ROOT: ${{ github.workspace }}
 
       - name: deploy script
         run: ./contracts/scripts/manage DeployBoundlessMarket --broadcast
