@@ -181,7 +181,7 @@ jobs:
       - name: Upload build-info artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-info
+          name: build-info-deployment
           path: contracts/out/build-info/
 
       - name: checkout code
@@ -192,7 +192,7 @@ jobs:
       - name: Download build-info artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-info
+          name: build-info-deployment
           path: contracts/reference-contract/build-info-reference
 
       - name: forge build
