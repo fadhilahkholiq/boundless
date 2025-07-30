@@ -123,7 +123,20 @@ contract DeployBoundlessMarket is BoundlessScript {
         console2.log("BoundlessMarket assessor image ID %s", Strings.toHexString(uint256(assessor_id), 32));
         console2.log("BoundlessMarket assessor guest URL %s", guestUrl);
 
-        console2.log("Deployed BoundlessMarket proxy contract at %s", marketAddress);
+        address boundlessMarketImpl = address(uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT))));
+        console2.log("Deployed BoundlessMarket proxy contract at %s with impl at %s", marketAddress, boundlessMarketImpl);
+
+        string[] memory args = new string[](8);
+        args[0] = "python3";
+        args[1] = "contracts/update_deployment_toml.py";
+        args[2] = "--boundless-market";
+        args[3] = Strings.toHexString(marketAddress);
+        args[4] = "--boundless-market-impl";
+        args[5] = Strings.toHexString(boundlessMarketImpl);
+        args[6] = "--boundless-market-old-impl";
+        args[7] = Strings.toHexString(address(0)); // Old impl is not set at deployment time
+
+        vm.ffi(args);
     }
 }
 
@@ -142,6 +155,9 @@ contract UpgradeBoundlessMarket is BoundlessScript {
         address marketAddress = deploymentConfig.boundlessMarket.required("boundless-market");
         address stakeToken = deploymentConfig.stakeToken.required("stake-token");
         address verifier = deploymentConfig.verifier.required("verifier");
+        address currentImplementation = address(
+            uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT)))
+        );
 
         // Get the current assessor image ID and guest URL
         BoundlessMarket market = BoundlessMarket(marketAddress);
@@ -203,12 +219,25 @@ contract UpgradeBoundlessMarket is BoundlessScript {
         );
         require(upgradedMarket.owner() == deploymentConfig.admin, "upgraded market admin does not match the admin");
 
+        address boundlessMarketImpl = address(uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT))));
+
         console2.log("Upgraded BoundlessMarket admin is %s", deploymentConfig.admin);
         console2.log("Upgraded BoundlessMarket proxy contract at %s", marketAddress);
+        console2.log("Upgraded BoundlessMarket impl contract at %s", boundlessMarketImpl);
         console2.log("Upgraded BoundlessMarket stake token contract at %s", deploymentConfig.stakeToken);
         console2.log("Upgraded BoundlessMarket verifier contract at %s", deploymentConfig.verifier);
         console2.log("Upgraded BoundlessMarket assessor image ID %s", Strings.toHexString(uint256(assessor_id), 32));
         console2.log("Upgraded BoundlessMarket assessor guest URL %s", upgradedGuestUrl);
+
+        string[] memory args = new string[](6);
+        args[0] = "python3";
+        args[1] = "contracts/update_deployment_toml.py";
+        args[2] = "--boundless-market-impl";
+        args[3] = Strings.toHexString(boundlessMarketImpl);
+        args[4] = "--boundless-market-old-impl";
+        args[5] = Strings.toHexString(currentImplementation);
+
+        vm.ffi(args);
     }
 }
 
@@ -223,13 +252,7 @@ contract RollbackBoundlessMarket is BoundlessScript {
         address admin = deploymentConfig.admin.required("admin");
         address marketAddress = deploymentConfig.boundlessMarket.required("boundless-market");
         string memory assessorGuestUrl = deploymentConfig.assessorGuestUrl.required("assessor-guest-url");
-        // Get the old implementation address from env var ROLLBACK_ADDRESS.
-        // This address should be set before running this script, e.g. by running the `find_rollback_address.sh` script.
-        // The script can be run with the following command:
-        // ```sh
-        // ./contracts/scripts/find_rollback_address.sh <PROXY_BOUNDLESS_MARKET_ADDRESS>
-        // ```
-        address oldImplementation = vm.envAddress("ROLLBACK_ADDRESS");
+        address oldImplementation = deploymentConfig.boundlessMarketOldImpl.required("boundless-market-old-impl");
 
         require(oldImplementation != address(0), "old implementation address is not set");
         console2.log("\nWARNING: This will rollback the BoundlessMarket contract to this address: %s\n", oldImplementation);
@@ -282,6 +305,14 @@ contract RollbackBoundlessMarket is BoundlessScript {
             "current implementation address does not match the old implementation address"
         );
         console2.log("Rollback successful. Current implementation address is now %s", currentImplementation);
+
+        string[] memory args = new string[](4);
+        args[0] = "python3";
+        args[1] = "contracts/update_deployment_toml.py";
+        args[2] = "--boundless-market-impl";
+        args[3] = Strings.toHexString(currentImplementation);
+
+        vm.ffi(args);
     }
 }
 

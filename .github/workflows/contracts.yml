@@ -16,6 +16,8 @@ permissions:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FOUNDRY_VERSION: v1.2.3
+  RISC0_TOOLCHAIN_VERSION: 1.88.0
+  RISC0_CRATE_VERSION: "2.3.0"
 
 jobs:
   contracts-changed:
@@ -37,6 +39,8 @@ jobs:
               - 'foundry.toml'
             test:
               - 'contracts/test/**'
+            scripts:
+              - 'contracts/scripts/**'
 
   gas-snapshots-check:
     runs-on: ubuntu-latest
@@ -116,3 +120,134 @@ jobs:
         env:
           FOUNDRY_PROFILE: reference-contract
           FOUNDRY_OUT: contracts/reference-contract/out
+
+  deployment-scripts:
+    runs-on: [ self-hosted, prod, "${{ matrix.os }}", "${{ matrix.device }}" ]
+    strategy:
+      # Run only on Linux with CPU.
+      matrix:
+        include:
+          - os: Linux
+            feature: default
+            device: cpu
+    steps:
+      - name: install npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install tomlkit
+        run: pip install tomlkit
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+
+      - uses: risc0/risc0/.github/actions/rustup@352dea62857ba57331053cd0986a12c1a4708732
+      
+      - uses: risc0/risc0/.github/actions/sccache@352dea62857ba57331053cd0986a12c1a4708732
+        with:
+          key: ${{ matrix.os }}-${{ matrix.feature }}
+
+      - name: install cargo risczero
+        uses: ./.github/actions/bininstall-risc0
+        with:
+          risczero-version: ${{ env.RISC0_CRATE_VERSION }}
+          toolchain-version: ${{ env.RISC0_TOOLCHAIN_VERSION }}
+
+      - name: checkout main code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          submodules: recursive
+
+      - name: Forge build on main branch
+        run: forge build
+        env:
+          FOUNDRY_PROFILE: reference-contract
+          FOUNDRY_OUT: contracts/out
+
+      - name: Upload build-info artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info
+          path: contracts/out/build-info/
+
+      - name: checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Download build-info artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-info
+          path: contracts/reference-contract/build-info-reference
+
+      - name: forge build
+        run: forge build
+
+      - name: cargo install boundless-cli
+        run: cargo install boundless-cli --path crates/boundless-cli --locked
+
+      - name: cargo install just
+        run: cargo install just
+
+      - name: spin up local network
+        run: just localnet up
+        env:
+          CI: 1
+          RISC0_DEV_MODE: 1
+
+      - name: deploy script
+        run: ./contracts/scripts/manage DeployBoundlessMarket --broadcast
+        env:
+          CHAIN_KEY: anvil
+
+      - name: forge test after new deployment
+        env:
+          CHAIN_KEY: anvil
+          RISC0_DEV_MODE: 1
+        run: ./contracts/scripts/test
+
+      - name: forge clean
+        run: forge clean
+        env:
+          FOUNDRY_OUT: contracts/out
+      
+      - name: upgrade script
+        run: ./contracts/scripts/manage UpgradeBoundlessMarket --broadcast
+        env:
+          CHAIN_KEY: anvil
+
+      - name: forge test after upgrade
+        env:
+          CHAIN_KEY: anvil
+          RISC0_DEV_MODE: 1
+        run: ./contracts/scripts/test
+
+      - name: rollback script
+        run: ./contracts/scripts/manage RollbackBoundlessMarket --broadcast
+        env:
+          CHAIN_KEY: anvil
+
+      - name: forge test after rollback
+        env:
+          CHAIN_KEY: anvil
+          RISC0_DEV_MODE: 1
+        run: ./contracts/scripts/test
+
+      - name: Cleanup
+        if: always()
+        run: just localnet down
+        env:
+          CI: 1
+
+      - name: sccache stats
+        run: sccache --show-stats
