@@ -141,6 +141,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install yq
+        run: sudo snap install yq
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
