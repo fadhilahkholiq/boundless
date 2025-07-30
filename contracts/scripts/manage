@@ -6,7 +6,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 SCRIPT_FILE="${SCRIPT_DIR}/Manage.s.sol"
 REPO_ROOT_DIR="${SCRIPT_DIR:?}/../.."
 FIREBLOCKS=0
-FOUNDRY_OUT=${FOUNDRY_OUT:-"contracts/out"}
+export FOUNDRY_OUT=${FOUNDRY_OUT:-"contracts/out"}
 
 POSITIONAL_ARGS=()
 FORGE_SCRIPT_FLAGS=()
