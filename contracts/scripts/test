@@ -8,7 +8,7 @@ FOUNDRY_PROFILE=${FOUNDRY_PROFILE:-"deployment-test"}
 # 0xbb001d44 is the selector for ZKVM_V2.2, update when necessary
 SELECTOR=${SELECTOR:-"0xbb001d44"}
 RISC0_DEV_MODE=${RISC0_DEV_MODE:-"false"}
-if [ "$RISC0_DEV_MODE" == "true" || "$RISC0_DEV_MODE" == "1" ]; then
+if [[ "$RISC0_DEV_MODE" == "true" || "$RISC0_DEV_MODE" == "1" ]]; then
     echo "Running in RISC0 dev mode"
     SELECTOR="0xFFFFFFFF" # Use a mock selector in dev mode
 else
