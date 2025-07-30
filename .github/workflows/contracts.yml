@@ -123,6 +123,8 @@ jobs:
 
   deployment-scripts:
     runs-on: [ self-hosted, prod, "${{ matrix.os }}", "${{ matrix.device }}" ]
+    needs: contracts-changed
+    if: ${{ needs.contracts-changed.outputs.src == 'true' || needs.contracts-changed.outputs.foundry == 'true' || needs.contracts-changed.outputs.scripts == 'true'}}
     strategy:
       # Run only on Linux with CPU.
       matrix:
@@ -131,6 +133,9 @@ jobs:
             feature: default
             device: cpu
     steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
       - name: install npm
         uses: actions/setup-node@v4
         with:
