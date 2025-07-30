@@ -256,6 +256,8 @@ localnet action="up": check-deps
             echo "[chains.anvil]" > $DEPLOYMENT_SECRETS_PATH
             echo "rpc-url = \"http://localhost:${ANVIL_PORT}\"" >> $DEPLOYMENT_SECRETS_PATH
             echo "etherscan-api-key = \"\"" >> $DEPLOYMENT_SECRETS_PATH
+            ls -al $DEPLOYMENT_SECRETS_PATH
+            cat $DEPLOYMENT_SECRETS_PATH
             ASSESSOR_ID=$(r0vm --id --elf target/riscv-guest/guest-assessor/assessor-guest/riscv32im-risc0-zkvm-elf/release/assessor-guest.bin)
             ASSESSOR_ID="0x$ASSESSOR_ID"
             ASSESSOR_GUEST_BIN_PATH=$(realpath target/riscv-guest/guest-assessor/assessor-guest/riscv32im-risc0-zkvm-elf/release/assessor-guest.bin)

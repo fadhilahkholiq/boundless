@@ -217,6 +217,9 @@ jobs:
           RISC0_DEV_MODE: 1
           REPO_ROOT: ${{ github.workspace }}
 
+      - name: debug file
+        run: ls -al contracts/deployment_secrets.toml
+      
       - name: deploy script
         run: ./contracts/scripts/manage DeployBoundlessMarket --broadcast
         env:
