@@ -251,6 +251,8 @@ localnet action="up": check-deps
 
         if [ $CI -eq 1 ]; then
             DEPLOYMENT_SECRETS_PATH="contracts/deployment_secrets.toml"
+            touch ${DEPLOYMENT_SECRETS_PATH}
+            echo "Creating deployment_secrets.toml..."
             echo "[chains.anvil]" > contracts/deployment_secrets.toml
             echo "rpc-url = \"http://localhost:${ANVIL_PORT}\"" >> contracts/deployment_secrets.toml
             echo "etherscan-api-key = \"\"" >> contracts/deployment_secrets.toml
