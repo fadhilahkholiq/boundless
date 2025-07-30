@@ -204,6 +204,9 @@ jobs:
       - name: cargo install just
         run: cargo install just
 
+      - name: cargo build
+        run: cargo build --locked
+
       - name: spin up local network
         run: just localnet up
         env:

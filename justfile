@@ -203,8 +203,14 @@ localnet action="up": check-deps
         echo "Building contracts..."
         forge build || { echo "Failed to build contracts"; just localnet down; exit 1; }
         echo "Building Rust project..."
-        cargo build --bin order_stream || { echo "Failed to build order-stream binary"; just localnet down; exit 1; }
-        cargo build --bin boundless || { echo "Failed to build boundless CLI binary"; just localnet down; exit 1; }
+        if [ $CI -eq 1 ]; then
+            echo "Running in CI mode, skipping Rust build."
+            # In CI, we assume the Rust project is already built
+            # and the binaries are available in the target directory.
+        else
+            cargo build --locked --bin order_stream || { echo "Failed to build order-stream binary"; just localnet down; exit 1; }
+            cargo build --locked --bin boundless || { echo "Failed to build boundless CLI binary"; just localnet down; exit 1; }
+        fi
         # Check if Anvil is already running
         if nc -z localhost $ANVIL_PORT; then
             echo "Anvil is already running on port $ANVIL_PORT. Reusing existing instance."
