@@ -250,12 +250,12 @@ localnet action="up": check-deps
             $HIT_POINTS_ADDRESS "mint(address, uint256)" $DEFAULT_ADDRESS $DEPOSIT_AMOUNT
 
         if [ $CI -eq 1 ]; then
-            DEPLOYMENT_SECRETS_PATH="contracts/deployment_secrets.toml"
-            touch ${DEPLOYMENT_SECRETS_PATH}
-            echo "Creating deployment_secrets.toml..."
-            echo "[chains.anvil]" > contracts/deployment_secrets.toml
-            echo "rpc-url = \"http://localhost:${ANVIL_PORT}\"" >> contracts/deployment_secrets.toml
-            echo "etherscan-api-key = \"\"" >> contracts/deployment_secrets.toml
+            REPO_ROOT_DIR=$(git rev-parse --show-toplevel)
+            DEPLOYMENT_SECRETS_PATH="${REPO_ROOT_DIR}/contracts/deployment_secrets.toml"
+            echo "Creating ${DEPLOYMENT_SECRETS_PATH}..."
+            echo "[chains.anvil]" > $DEPLOYMENT_SECRETS_PATH
+            echo "rpc-url = \"http://localhost:${ANVIL_PORT}\"" >> $DEPLOYMENT_SECRETS_PATH
+            echo "etherscan-api-key = \"\"" >> $DEPLOYMENT_SECRETS_PATH
             ASSESSOR_ID=$(r0vm --id --elf target/riscv-guest/guest-assessor/assessor-guest/riscv32im-risc0-zkvm-elf/release/assessor-guest.bin)
             ASSESSOR_ID="0x$ASSESSOR_ID"
             ASSESSOR_GUEST_BIN_PATH=$(realpath target/riscv-guest/guest-assessor/assessor-guest/riscv32im-risc0-zkvm-elf/release/assessor-guest.bin)
