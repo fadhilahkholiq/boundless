@@ -198,7 +198,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-info-deployment
-          path: contracts/reference-contract/build-info-reference
+          path: contracts/build-info-reference
 
       - name: forge build
         run: forge build
