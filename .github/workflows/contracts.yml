@@ -218,6 +218,9 @@ jobs:
           CI: 1
           RISC0_DEV_MODE: 1
           REPO_ROOT: ${{ github.workspace }}
+
+      - name: debug
+        run: yq eval '.chains.anvil.rpc-url' contracts/deployment_secrets.toml
       
       - name: deploy script
         run: ./contracts/scripts/manage DeployBoundlessMarket --broadcast
