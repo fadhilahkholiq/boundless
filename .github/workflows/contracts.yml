@@ -218,14 +218,15 @@ jobs:
           CI: 1
           RISC0_DEV_MODE: 1
           REPO_ROOT: ${{ github.workspace }}
-
-      - name: debug file
-        run: ls -al contracts/deployment_secrets.toml
       
       - name: deploy script
         run: ./contracts/scripts/manage DeployBoundlessMarket --broadcast
         env:
           CHAIN_KEY: anvil
+          # This key is a prefunded address for the anvil test configuration (index 0)
+          DEPLOYER_PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          ADMIN_ADDRESS: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
       - name: forge test after new deployment
         env:
@@ -242,6 +243,10 @@ jobs:
         run: ./contracts/scripts/manage UpgradeBoundlessMarket --broadcast
         env:
           CHAIN_KEY: anvil
+          # This key is a prefunded address for the anvil test configuration (index 0)
+          DEPLOYER_PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          ADMIN_ADDRESS: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
       - name: forge test after upgrade
         env:
@@ -253,6 +258,10 @@ jobs:
         run: ./contracts/scripts/manage RollbackBoundlessMarket --broadcast
         env:
           CHAIN_KEY: anvil
+          # This key is a prefunded address for the anvil test configuration (index 0)
+          DEPLOYER_PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+          ADMIN_ADDRESS: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
       - name: forge test after rollback
         env:
