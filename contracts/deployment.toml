@@ -60,8 +60,8 @@ verifier = "0x925d8331ddc0a1F0d96E68CF073DFE1d92b69187"
 set-verifier = "0x7aAB646f23D1392d4522CFaB0b7FB5eaf6821d64"
 # deployed at block 8430932
 boundless-market = "0x7b36Ed56ec6045679C178205a81AE878d85B773d"
-boundless-market-impl = "0x0000000000000000000000000000000000000000"
-boundless-market-old-impl = "0x0000000000000000000000000000000000000000"
+boundless-market-impl = "0x501b1689eaa5d8df274b234fa7f940a8dc45374b"
+boundless-market-old-impl = "0x947286e7522ef75543ad23253bb6d6ac9f5d97a3"
 stake-token = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"
 
 # Guests info
