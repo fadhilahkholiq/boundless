@@ -124,7 +124,9 @@ contract DeployBoundlessMarket is BoundlessScript {
         console2.log("BoundlessMarket assessor guest URL %s", guestUrl);
 
         address boundlessMarketImpl = address(uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT))));
-        console2.log("Deployed BoundlessMarket proxy contract at %s with impl at %s", marketAddress, boundlessMarketImpl);
+        console2.log(
+            "Deployed BoundlessMarket proxy contract at %s with impl at %s", marketAddress, boundlessMarketImpl
+        );
 
         string[] memory args = new string[](8);
         args[0] = "python3";
@@ -155,9 +157,7 @@ contract UpgradeBoundlessMarket is BoundlessScript {
         address marketAddress = deploymentConfig.boundlessMarket.required("boundless-market");
         address stakeToken = deploymentConfig.stakeToken.required("stake-token");
         address verifier = deploymentConfig.verifier.required("verifier");
-        address currentImplementation = address(
-            uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT)))
-        );
+        address currentImplementation = address(uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT))));
 
         // Get the current assessor image ID and guest URL
         BoundlessMarket market = BoundlessMarket(marketAddress);
@@ -255,17 +255,16 @@ contract RollbackBoundlessMarket is BoundlessScript {
         address oldImplementation = deploymentConfig.boundlessMarketOldImpl.required("boundless-market-old-impl");
 
         require(oldImplementation != address(0), "old implementation address is not set");
-        console2.log("\nWARNING: This will rollback the BoundlessMarket contract to this address: %s\n", oldImplementation);
+        console2.log(
+            "\nWARNING: This will rollback the BoundlessMarket contract to this address: %s\n", oldImplementation
+        );
 
         // Rollback the proxy contract.
         vm.startBroadcast(admin);
 
         bytes memory initializer = abi.encodeCall(BoundlessMarket.setImageUrl, (assessorGuestUrl));
-        bytes memory rollbackUpgradeData = abi.encodeWithSignature(
-            "upgradeToAndCall(address,bytes)",
-            oldImplementation,
-            initializer
-        );
+        bytes memory rollbackUpgradeData =
+            abi.encodeWithSignature("upgradeToAndCall(address,bytes)", oldImplementation, initializer);
 
         (bool success, bytes memory returnData) = marketAddress.call(rollbackUpgradeData);
         require(success, string(returnData));
@@ -297,9 +296,7 @@ contract RollbackBoundlessMarket is BoundlessScript {
         console2.log("Upgraded BoundlessMarket assessor image ID %s", Strings.toHexString(uint256(assessor_id), 32));
         console2.log("Upgraded BoundlessMarket assessor guest URL %s", upgradedGuestUrl);
 
-        address currentImplementation = address(
-            uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT)))
-        );
+        address currentImplementation = address(uint160(uint256(vm.load(marketAddress, IMPLEMENTATION_SLOT))));
         require(
             currentImplementation == oldImplementation,
             "current implementation address does not match the old implementation address"
@@ -364,4 +361,3 @@ contract AcceptTransferOwnership is BoundlessScript {
         console2.log("Accepted transfer of ownership of the BoundlessMarket contract from %s", admin);
     }
 }
-
