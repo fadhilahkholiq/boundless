@@ -34,13 +34,13 @@ max_journal_bytes = 10000
 #
 # If there is not enough time left before the deadline, the prover may not be able to complete
 # proving of the request and finalize the batch for publishing before expiration.
-min_deadline = 120
+min_deadline = 300
 # On startup, the number of blocks to look back for possible open orders.
 lookback_blocks = 0 # 300 blocks ~ 1 hour @ 12s block times
 # Max stake amount, denominated in the Boundless staking token.
 #
 # Requests that require a higher stake than this will not be considered.
-max_stake = "25" # USDC
+max_stake = "6" # USDC
 # Max input / image file size allowed for downloading from request URLs.
 max_file_size = 50_000_000
 # Max retries for fetching input / image contents from URLs
@@ -48,11 +48,11 @@ max_file_size = 50_000_000
 # Max concurrent locks
 #
 # Maximum number of concurrent proofs that can be processed at once
-max_concurrent_proofs = 2
+max_concurrent_proofs = 1
 # Maximum number of orders to concurrently work on pricing
 #
 # Used to limit pricing tasks spawned to prevent overwhelming the system
-max_concurrent_preflights = 8
+max_concurrent_preflights = 4
 # Order pricing priority mode
 #
 # Determines how orders are prioritized for pricing. Options:
@@ -84,7 +84,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Optional additional gas to add to the transaction for lockinRequest, good
 # for increasing the priority if competing with multiple provers during the
 # same block
-lockin_priority_gas = 130000000
+lockin_priority_gas = 1000
 # Optional balance warning threshold (in native token)
 #
 # If the submitter balance drops below this the broker will issue warning logs
