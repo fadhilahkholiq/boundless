@@ -1,16 +1,6 @@
-// Copyright 2025 RISC Zero, Inc.
+// Copyright (c) 2025 RISC Zero, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// All rights reserved.
 
 use std::{collections::HashMap, sync::Arc, time::Duration};
 
@@ -453,7 +443,7 @@ where
                 .get(order_id)
                 .unwrap_or(&OrderPrice { price: U256::ZERO, stake_reward: U256::ZERO });
             tracing::info!(
-                "✨ Completed order: 0x{:x} fee: {} stake_reward: {} ✨",
+                "✨ Completed order: {:x} fee: {} stake_reward: {} ✨",
                 fulfillment.id,
                 format_ether(order_price.price),
                 format_ether(order_price.stake_reward)
@@ -491,7 +481,7 @@ where
         fulfillments: &[Fulfillment],
         order_ids: &[&str],
     ) -> Result<(), SubmitterErr> {
-        tracing::warn!("Failed to submit proofs for batch {batch_id}: {err:?} ");
+        tracing::warn!("Failed to submit proofs: {err:?} for batch {batch_id}");
         for (fulfillment, order_id) in fulfillments.iter().zip(order_ids.iter()) {
             if let Err(db_err) = self.db.set_order_failure(order_id, "Failed to submit batch").await
             {
@@ -595,7 +585,7 @@ where
                 }
 
                 // TODO: configuration
-                tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
+                tokio::time::sleep(tokio::time::Duration::from_millis(100)).await; // Reduced from 1 second to 100ms for faster processing
             }
             Ok(())
         })
