@@ -4,7 +4,7 @@
 # This price is multiplied the number of mega-cycles (i.e. million RISC-V cycles) that the requested
 # execution took, as calculated by running the request in preflight. This is one of the inputs to
 # decide the minimum price to accept for a request.
-mcycle_price = "0"
+mcycle_price = "0.00000000003"
 # Mega-cycle price, denominated in the Boundless staking token.
 #
 # Similar to the mcycle_price option above. This is used to determine the minimum price to accept an
@@ -13,7 +13,9 @@ mcycle_price_stake_token = "0.00001"
 # Optional priority requestor addresses that can bypass the mcycle limit and max input size limit.
 #
 # If enabled, the order will be preflighted without constraints.
-priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0",]
+priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0"]
+allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0","0x734dF7809c4ef94Da037449C287166D114503198","0x3Ee7d9175eC8BB9e16e8FD3AbDEF5a354b247528","0x2693946791da99da78ac441aba6d5ce2bccd96d3","0x66f68692c03eB9C0656D676f2F4bD13eba40D1B7","0xc4Ce4f04b9907a9401a0Ed7ef073dffEbAB52aAB"]
+
 # Estimated peak performance of the proving cluster, in kHz.
 #
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
@@ -23,7 +25,7 @@ peak_prove_khz = 650
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
-max_mcycle_limit = 3000
+max_mcycle_limit = 1000
 # Max journal size in bytes
 #
 # Orders that produce a journal larger than this size in preflight will be skipped. Since journals
@@ -40,7 +42,7 @@ lookback_blocks = 0 # 300 blocks ~ 1 hour @ 12s block times
 # Max stake amount, denominated in the Boundless staking token.
 #
 # Requests that require a higher stake than this will not be considered.
-max_stake = "25" # USDC
+max_stake = "7" # USDC
 # Max input / image file size allowed for downloading from request URLs.
 max_file_size = 50_000_000
 # Max retries for fetching input / image contents from URLs
@@ -52,13 +54,14 @@ max_concurrent_proofs = 2
 # Maximum number of orders to concurrently work on pricing
 #
 # Used to limit pricing tasks spawned to prevent overwhelming the system
-max_concurrent_preflights = 6
+max_concurrent_preflights = 4
 # Order pricing priority mode
 #
 # Determines how orders are prioritized for pricing. Options:
 # - "random": Process orders in random order to distribute competition among provers (default)
 # - "observation_time": Process orders in the order they were observed (FIFO)
 # - "shortest_expiry": Process orders by shortest expiry first (earliest deadline)
+#order_pricing_priority = "random"
 order_pricing_priority = "observation_time"
 # Order commitment priority mode
 #
@@ -74,7 +77,7 @@ max_critical_task_retries = 10
 # Optional allow list for customer address.
 #
 # If enabled, all requests from clients not in the allow list are skipped.
-allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0","0x734dF7809c4ef94Da037449C287166D114503198","0x3Ee7d9175eC8BB9e16e8FD3AbDEF5a354b247528","0x2693946791da99da78ac441aba6d5ce2bccd96d3","0x66f68692c03eB9C0656D676f2F4bD13eba40D1B7","0xc4Ce4f04b9907a9401a0Ed7ef073dffEbAB52aAB","0xc73c222d7d39778bf9212f23a8f4356ff7c1e77f",]
+#allow_client_addresses = []
 # Optional deny list for requestor address.
 #
 # If enabled, all requests from clients in the deny list are skipped.
@@ -84,7 +87,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Optional additional gas to add to the transaction for lockinRequest, good
 # for increasing the priority if competing with multiple provers during the
 # same block
-lockin_priority_gas = 1000
+lockin_priority_gas = 13000000
 # Optional balance warning threshold (in native token)
 #
 # If the submitter balance drops below this the broker will issue warning logs
@@ -96,43 +99,45 @@ balance_error_threshold = "0.000005"
 # Optional stake balance warning threshold (in stake tokens)
 #
 # If the stake balance drops below this the broker will issue warning logs
-stake_balance_warn_threshold = "1"
+stake_balance_warn_threshold = "0.0005"
 # Optional stake balance error threshold (in stake tokens)
 #
 # If the stake balance drops below this the broker will issue error logs
-stake_balance_error_threshold = "5"
+stake_balance_error_threshold = "0.0003"
 # Optional cache directory for storing downloaded images and inputs
 #
 # If not set, files will be re-downloaded every time
-cache_dir = "./cache"
+#cache_dir = "./cache"
 # Gas estimate for lockin call
 #
 # Used for estimating the gas costs associated with an order during pricing. If not set a
 # conservative default will be used.
-#lockin_gas_estimate = 200000
+#lockin_gas_estimate = 1000
 # Gas estimate for fulfill call
 #
 # Used for estimating the gas costs associated with an order during pricing. If not set a
 # conservative default will be used.
-#fulfill_gas_estimate = 750000
+#fulfill_gas_estimate = 850000
 # Gas estimate for proof verification using the RiscZeroGroth16Verifier
 #
 # Used for estimating the gas costs associated with an order during pricing. If not set a
 # conservative default will be used.
-#groth16_verify_gas_estimate = 250000
+#groth16_verify_gas_estimate = 300000
 
 [prover]
+# Optional config, if using bonsai set the zkVM version here
+bonsai_r0_zkvm_ver = "2.3.1"
 # Number of retries to poll for proving status.
 #
 # Provides a little durability for transient failures.
-status_poll_retry_count = 3
+status_poll_retry_count = 4
 # Polling interval to monitor proving status (in millisecs)
 status_poll_ms = 50
 # Number of retries to query a prover backend for on failures.
 #
 # Used for API requests to a prover backend, creating sessions, preflighting, uploading images, etc.
 # Provides a little durability for transient failures.
-req_retry_count = 3
+req_retry_count = 4
 # Number of milliseconds to sleep between retries.
 req_retry_sleep_ms = 50
 # Number of retries to for running the entire proof generation process
@@ -140,7 +145,7 @@ req_retry_sleep_ms = 50
 # This is separate from the request retry count, as the proving process
 # is a multi-step process involving multiple API calls to create a proof
 # job and then polling for the proof job to complete.
-proof_retry_count = 1
+proof_retry_count = 4
 # Number of milliseconds to sleep between proof retries.
 proof_retry_sleep_ms = 50
 # Set builder guest program (ELF) path
@@ -160,7 +165,7 @@ reaper_interval_secs = 5
 # This provides a buffer time after an order expires before the reaper marks it as failed.
 # This helps prevent race conditions with the aggregator that might be processing the order.
 # If not set, it defaults to 10800 seconds (3 hours).
-# reaper_grace_period_secs = 10800
+#reaper_grace_period_secs = 900
 
 [batcher]
 # Max batch duration before publishing (in seconds)
@@ -187,12 +192,8 @@ withdraw = false
 # conditions
 batch_poll_time_ms = 100
 # Max combined journal size (in bytes) that once exceeded will trigger a publish
-#batch_max_journal_bytes = 10000
+#batch_max_journal_bytes = 12000
 # max batch fees (in ETH) before publishing
-#batch_max_fees = "0.1"
+#batch_max_fees = "0.15"
 # Number of attempts to make to submit a batch before abandoning
-#max_submission_attempts = 2
-
-# Optional config, only needed if using bonsai to set the zkVM version header. Not necessary when
-# using Bento as the prover.
-# bonsai_r0_zkvm_ver = "2.3.0"
+#max_submission_attempts = 3
