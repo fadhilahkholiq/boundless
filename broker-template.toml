@@ -107,7 +107,7 @@ stake_balance_error_threshold = "0.0003"
 # Optional cache directory for storing downloaded images and inputs
 #
 # If not set, files will be re-downloaded every time
-#cache_dir = "./cache"
+cache_dir = "./cache"
 # Gas estimate for lockin call
 #
 # Used for estimating the gas costs associated with an order during pricing. If not set a
