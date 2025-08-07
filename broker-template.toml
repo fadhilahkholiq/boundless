@@ -62,7 +62,7 @@ max_concurrent_preflights = 4
 # - "observation_time": Process orders in the order they were observed (FIFO)
 # - "shortest_expiry": Process orders by shortest expiry first (earliest deadline)
 #order_pricing_priority = "random"
-order_pricing_priority = "observation_time"
+order_pricing_priority = "shortest_expiry"
 # Order commitment priority mode
 #
 # Determines how orders are prioritized when committing to prove them. Options:
