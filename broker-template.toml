@@ -21,7 +21,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
 # can be derived from benchmarking using Bento CLI or from data based on fulfilling market orders.
 # For more information, see https://docs.beboundless.xyz/provers/broker#benchmarking-bento
-peak_prove_khz = 650
+peak_prove_khz = 1300
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
