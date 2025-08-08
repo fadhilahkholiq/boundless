@@ -13,7 +13,7 @@ mcycle_price_stake_token = "0.00001"
 # Optional priority requestor addresses that can bypass the mcycle limit and max input size limit.
 #
 # If enabled, the order will be preflighted without constraints.
-priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0"]
+#priority_requestor_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0"]
 allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89b2bd434ceac6c74fbc0b2ad3a280e66db0","0x734dF7809c4ef94Da037449C287166D114503198","0x3Ee7d9175eC8BB9e16e8FD3AbDEF5a354b247528","0x2693946791da99da78ac441aba6d5ce2bccd96d3","0x66f68692c03eB9C0656D676f2F4bD13eba40D1B7","0xc4Ce4f04b9907a9401a0Ed7ef073dffEbAB52aAB"]
 
 # Estimated peak performance of the proving cluster, in kHz.
@@ -21,7 +21,7 @@ allow_client_addresses = ["0x2546c553d857d20658ece248f7c7d0861a240681","0xc2db89
 # Used to estimate proving capacity and accept only as much work as the prover can handle. Estimates
 # can be derived from benchmarking using Bento CLI or from data based on fulfilling market orders.
 # For more information, see https://docs.beboundless.xyz/provers/broker#benchmarking-bento
-peak_prove_khz = 700
+peak_prove_khz = 600
 # Optional max cycles (in mcycles)
 #
 # Orders over this max_cycles will be skipped after preflight
@@ -42,7 +42,7 @@ lookback_blocks = 0 # 300 blocks ~ 1 hour @ 12s block times
 # Max stake amount, denominated in the Boundless staking token.
 #
 # Requests that require a higher stake than this will not be considered.
-max_stake = "7" # USDC
+max_stake = "5" # USDC
 # Max input / image file size allowed for downloading from request URLs.
 max_file_size = 50_000_000
 # Max retries for fetching input / image contents from URLs
@@ -62,7 +62,7 @@ max_concurrent_preflights = 4
 # - "observation_time": Process orders in the order they were observed (FIFO)
 # - "shortest_expiry": Process orders by shortest expiry first (earliest deadline)
 #order_pricing_priority = "random"
-order_pricing_priority = "shortest_expiry"
+order_pricing_priority = "observation_time"
 # Order commitment priority mode
 #
 # Determines how orders are prioritized when committing to prove them. Options:
